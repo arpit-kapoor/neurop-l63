@@ -51,9 +51,5 @@
                 "ms-toolsai.jupyter"
             ]
         }
-    },
-
-        
-    "runArgs": ["--gpus","all"]
-
+    }
 }

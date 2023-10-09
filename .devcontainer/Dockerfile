@@ -6,8 +6,8 @@ FROM mcr.microsoft.com/devcontainers/python:3.10
 RUN pip install ipykernel ipywidgets
 RUN pip install pandas seaborn scipy scikit-learn tqdm 
 RUN pip install pyyaml
-RUN pip install torch torchvision torchaudio
-RUN git clone https://github.com/NeuralOperator/neuraloperator /tmp/neuralop
-RUN pip install -e /tmp/neuralop
-RUN pip install -r /tmp/neuralop/requirements.txt
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 RUN pip install torch-scatter
+RUN git clone https://github.com/NeuralOperator/neuraloperator /tmp/neuralop
+RUN pip install -r /tmp/neuralop/requirements.txt
+RUN pip install -e /tmp/neuralop
