@@ -16,7 +16,8 @@ class FNO3d(nn.Module):
     FNO contains 5 Fourier interal operator layers
     """
 
-    def __init__(self, modes1, modes2, modes3, width, n_blocks=5):
+    def __init__(self, modes1, modes2, modes3, width, 
+                 n_blocks=5, in_channel=4, device='cpu'):
         super(FNO3d, self).__init__()
 
         self.modes1 = modes1
@@ -24,13 +25,14 @@ class FNO3d(nn.Module):
         self.modes3 = modes3
         self.width = width
         self.n_blocks = n_blocks
-        self.upscale = nn.Linear(4, self.width)
+        self.upscale = nn.Linear(in_channel, self.width).to(device)
         self.spectral_conv3d = [SpectralConv3d(self.width, self.width,
-                                           self.modes1, self.modes2, self.modes3) for _ in range(self.n_blocks)]
-        self.linear = [nn.Conv1d(self.width, self.width, 1) for _ in range(self.n_blocks)]
+                                               self.modes1, self.modes2, 
+                                               self.modes3).to(device) for _ in range(self.n_blocks)]
+        self.linear = [nn.Conv1d(self.width, self.width, 1).to(device) for _ in range(self.n_blocks)]
 
-        self.downscale = nn.Linear(self.width, 128)
-        self.output = nn.Linear(128, 1)
+        self.downscale = nn.Linear(self.width, 128).to(device)
+        self.output = nn.Linear(128, 1).to(device)
 
     def forward(self, x):
         """

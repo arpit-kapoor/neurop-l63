@@ -12,11 +12,13 @@ class LpLoss(object):
         self.reduction = reduction
         self.size_average = size_average
 
-    def rel(self, x, y):
-        num_examples = x.size()[0]
+    def rel(self, y_pred, y):
 
-        diff_norms = torch.norm(x.reshape(num_examples,-1) - y.reshape(num_examples,-1), self.p, 1)
-        y_norms = torch.norm(y.reshape(num_examples,-1), self.p, 1)
+        y_pred = y_pred.flatten(start_dim=-self.d)
+        y = y.flatten(start_dim=-self.d)
+
+        diff_norms = torch.norm(y_pred - y, self.p, -1)
+        y_norms = torch.norm(y, self.p, -1)
 
         if self.reduction:
             if self.size_average:
@@ -26,5 +28,5 @@ class LpLoss(object):
 
         return diff_norms/y_norms
 
-    def __call__(self, x, y):
-        return self.rel(x, y)
+    def __call__(self, y_pred, y):
+        return self.rel(y_pred, y)
