@@ -1,15 +1,9 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/python-3-miniconda
 {
-    "name": "torch",
-    "build": { 
-        "context": "..",
-        "dockerfile": "Dockerfile",
-        "args": {
-            "NODE_VERSION": "none"
-        }
-    },
-
+    "name": "neuralops",
+    "image": "dlak:latest",
+    
     "mounts": [
         "source=${localWorkspaceFolder},target=/project,type=bind,consistency=cached"
     ],
